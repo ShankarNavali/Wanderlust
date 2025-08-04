@@ -17,7 +17,7 @@ router.route("/").get(wrapAsync(listingController.index)).post(
 
 	wrapAsync(listingController.createListing)
 );
-// .post( (req, res) => {
+// .post(upload.single('listing[image]'), (req, res) => {
 // 	res.send(req.file);
 // });
 //New Route

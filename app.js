@@ -1,6 +1,8 @@
 if (process.env.NODE_ENV != "production") {
 	require("dotenv").config();
 }
+// require("dotenv").config();
+// console.log(process.env.SECRET);
 
 const express = require("express");
 const app = express();
@@ -22,8 +24,8 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const { error } = require("console");
 
-//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl = process.env.ATLASDB_URL;
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+//const dbUrl = process.env.ATLASDB_URL;
 
 main()
 	.then(() => {
@@ -34,7 +36,7 @@ main()
 	});
 
 async function main() {
-	await mongoose.connect(dbUrl);
+	await mongoose.connect(MONGO_URL);
 }
 
 app.set("view engine", "ejs");
@@ -45,7 +47,7 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 const store = MongoStore.create({
-	mongoUrl: dbUrl,
+	mongoUrl: MONGO_URL,
 	crypto: {
 		secret: process.env.SECRET,
 	},
